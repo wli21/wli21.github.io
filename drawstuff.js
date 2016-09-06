@@ -113,7 +113,7 @@ function drawRandPixelsInInputSpheres(context) {
     var w = context.canvas.width;
     var h = context.canvas.height;
     var imagedata = context.createImageData(w,h);
-    const PIXEL_DENSITY = 0.5;
+    const PIXEL_DENSITY = 0.01;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY; 
     
     if (inputSpheres != String.null) { 
