@@ -113,7 +113,7 @@ function drawRandPixelsInInputSpheres(context) {
     var w = context.canvas.width;
     var h = context.canvas.height;
     var imagedata = context.createImageData(w,h);
-    const PIXEL_DENSITY = 1;
+    const PIXEL_DENSITY = 0.5;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY; 
     
     if (inputSpheres != String.null) { 
@@ -139,7 +139,7 @@ function drawRandPixelsInInputSpheres(context) {
                 inputSpheres[s].diffuse[0]*255,
                 inputSpheres[s].diffuse[1]*255,
                 inputSpheres[s].diffuse[2]*255,
-                inputSpheres[s].diffuse[3]*255); 
+                255); // rand color
             for (var p=0; p<numSpherePixels; p++) {
                 do {
                     x = Math.random()*2 - 1; // in unit square 
