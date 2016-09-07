@@ -249,7 +249,7 @@ function draw(context) {
     var w = context.canvas.width;
     var h = context.canvas.height;
     var imagedata = context.createImageData(w,h);
-	var eye = new Point(0.5,0.5,-0.5*);
+	var eye = new Point(0.5,0.5,-0.5);
 	var light = new Point(2,4,-0.5);
 	var upperLeft = new Point(0,1,0);
 	var lowerRight = new Point(1,0,0);
