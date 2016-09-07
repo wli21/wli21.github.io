@@ -329,6 +329,9 @@ function main() {
     var canvas = document.getElementById("viewport"); 
     var context = canvas.getContext("2d");
  
+ 
+	draw(context);
+	
     // Create the image
     //drawRandPixels(context);
       // shows how to draw pixels
