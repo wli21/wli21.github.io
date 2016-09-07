@@ -259,7 +259,7 @@ function draw(context) {
 	for (var i=0; i< w; i++) {
 		for (var j=0; j < h; j++) {
 			
-			var c = new Color(0,0,0,255); // the color at the pixel: black
+			var c = new Color(0,0,0,0); // the color at the pixel: black
 			var t = 0;// t used to store the close intersect
 			var intersected = -1;// store the sequence number of the intersected sphere, -1 means no intersect
 			var x = i / w;// map each pixel to window , z coord is 0
@@ -293,7 +293,7 @@ function draw(context) {
 					root = solveQuadra(a,b,cc);
 					
 					// first intersect
-					/*if (intersected == -1 && root != -1){
+					if (intersected == -1 && root != -1){
 						t = root;
 						intersected = s;
 						c.change(
@@ -309,11 +309,12 @@ function draw(context) {
 							inputSpheres[intersected].diffuse[1]*255,
 							inputSpheres[intersected].diffuse[2]*255,
 									255); 
-					}*/
+					}
 				} 
 			} 
 			//draw pixel
 			drawPixel(imagedata,i,j,c);
+			c.change(0,0,0,0);
 		}
 	}	
 	context.putImageData(imagedata, 0, 0);
