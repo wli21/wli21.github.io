@@ -292,9 +292,9 @@ function draw(context) {
 					cc = c1*c1 + c2*c2 + c3*c3 - inputSpheres[s].r * inputSpheres[s].r;
 					var root = solveQuadra(a,b,cc);
 					
-					if (i > 200 && i< 300 && j > 200 && j < 300){
-					console.log("root for a= "+a+" b= "+b+" c= " + cc + "is " + root);
-					}
+					//if (i > 200 && i< 300 && j > 200 && j < 300){
+					//console.log("root for a= "+a+" b= "+b+" c= " + cc + "is " + root);
+					//}
 					
 					if (root != -1){
 						if (intersected == -1 || root < t){
