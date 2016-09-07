@@ -61,7 +61,7 @@ function drawPixel(imagedata,x,y,color) {
         if ((typeof(x) !== "number") || (typeof(y) !== "number"))
             throw "drawpixel location not a number";
         else if ((x<0) || (y<0) || (x>=imagedata.width) || (y>=imagedata.height))
-            throw "drawpixel location outside of image";
+            throw "drawpixel location outside of image " + x + " " + y;
         else if (color instanceof Color) {
             var pixelindex = (y*imagedata.width + x) * 4;
             imagedata.data[pixelindex] = color.r;
