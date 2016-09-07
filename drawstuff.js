@@ -264,13 +264,14 @@ function draw(context) {
 			var intersected = -1;// store the sequence number of the intersected sphere, -1 means no intersect
 			var x = i / w;// map each pixel to window , z coord is 0
 			var y = 1 - j / h;
+			var z = 0;
 			// define a ray through this pixel and eye, which represented by x = a_x*t + b
-			a1 = x - 0.5; 
-			b1 = 0.5;
-			a2 = y - 0.5; 
-			b2 = 0.5;
-			a3 = 0.5;
-			b3 = -0.5
+			a1 = x - eye.x; 
+			b1 = eye.x;
+			a2 = y - eye.y; 
+			b2 = eye.y;
+			a3 = z - eye.z;
+			b3 = eye.z;
 			
 			// check if sphere found
 			if (inputSpheres != String.null) { 
@@ -288,7 +289,7 @@ function draw(context) {
 					
 					a = (a1*a1 + a2*a2 + a3*a3);
 					b = 2*(a1*c1 + a2*c2 + a3*c3);
-					cc = c1*c1 + c2*c2 + c3*c3 - inputSpheres[s].r;
+					cc = c1*c1 + c2*c2 + c3*c3 - inputSpheres[s].r * inputSpheres[s].r;
 					root = solveQuadra(a,b,cc);
 					
 					// first intersect
