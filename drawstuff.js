@@ -205,42 +205,48 @@ function drawInputSpheresUsingArcs(context) {
 // solve a quadratic equation, return the smallest positive t value that greater or equal to 1,
 // or -1, which means no intersect
 function solveQuadra(a,b,c) {
+	
+	//console.log("a= "+a+" b= "+b+" c= "+c);
+	
+	var ret = -1;
 	t1=-b/2/a+Math.pow(Math.pow(b,2)-4*a*c,0.5)/2/a;
 	t2=-b/2/a-Math.pow(Math.pow(b,2)-4*a*c,0.5)/2/a;
+	
+	//console.log("t1 = " + t1+"t2 = " + t2);
 	// t less than 1 means the intersection is between eye and the window
-	if (t1 == "NaN" && t2 == "NaN") {
-		return -1;
-	} else if (t1 == "NaN") {
-		if (t2 < 1){
-			return -1;
-		} else {
-			return t2;
+	if (isNaN(t1) && isNaN(t2)) {
+	} else if (isNaN(t1)) {
+		if (t2 >= 1){
+			ret =  t2;
 		}
-	} else if (t2 == "NaN") {
-		if (t1 < 1){
-			return -1;
-		} else {
-			return t1;
+	} else if (isNaN(t2)) {
+		if (t1 >= 1){
+			ret = t1;
 		}
 	} else {
 		if (t1 < t2){
 			if (t2 < 1){
-				return -1;
 			} else if (t1 < 1) {
-				return t2;
+				ret = t2;
 			} else {
-				return t1;
+				ret = t1;
 			}
 		} else {
 			if (t1 < 1){
-				return -1;
+				
 			} else if (t2 < 1) {
-				return t1;
+				ret = t1;
 			} else {
-				return t2;
+				ret = t2;
 			}
 		}
 	}
+	
+	//if (ret != -1){
+		//console.log(ret);
+	//}
+	
+	return ret;
 }
 
 // draw 
