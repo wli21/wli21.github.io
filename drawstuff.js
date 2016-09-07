@@ -61,7 +61,7 @@ function drawPixel(imagedata,x,y,color) {
         if ((typeof(x) !== "number") || (typeof(y) !== "number"))
             throw "drawpixel location not a number";
         else if ((x<0) || (y<0) || (x>=imagedata.width) || (y>=imagedata.height))
-            throw "drawpixel location outside of image " + x + " " + y;
+            throw "drawpixel location outside of image";
         else if (color instanceof Color) {
             var pixelindex = (y*imagedata.width + x) * 4;
             imagedata.data[pixelindex] = color.r;
@@ -256,8 +256,8 @@ function draw(context) {
 	var a1, b1, a2, b2, a3, b3 = 0;
 	
 	//loop over every pixel
-	for (var i=0; i<= w; i++) {
-		for (var j=0; j <= h; j++) {
+	for (var i=0; i< w; i++) {
+		for (var j=0; j < h; j++) {
 			
 			var c = new Color(0,0,0,0); // the color at the pixel: black
 			var t = 0;// t used to store the close intersect
