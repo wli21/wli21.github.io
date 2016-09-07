@@ -293,7 +293,7 @@ function draw(context) {
 					root = solveQuadra(a,b,cc);
 					
 					// first intersect
-					if (intersected == -1 && root != -1){
+					/*if (intersected == -1 && root != -1){
 						t = root;
 						intersected = s;
 						c.change(
@@ -309,7 +309,7 @@ function draw(context) {
 							inputSpheres[intersected].diffuse[1]*255,
 							inputSpheres[intersected].diffuse[2]*255,
 									255); 
-					}
+					}*/
 				} 
 			} 
 			//draw pixel
