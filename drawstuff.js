@@ -1,5 +1,17 @@
 /* classes */ 
 
+// Point constructor
+class Point {
+	constructor(x,y,z) {
+		try {
+			this.x = x, this.y = y, this.z = z;
+		}
+		catch (e) {
+			console.log(e);
+		}
+	}
+}
+
 // Color constructor
 class Color {
     constructor(r,g,b,a) {
@@ -190,10 +202,128 @@ function drawInputSpheresUsingArcs(context) {
     } // end if spheres found
 } // end draw input spheres
 
+// solve a quadratic equation, return the smallest positive t value that greater or equal to 1,
+// or -1, which means no intersect
+function solveQuadra(a,b,c) {
+	t1=-b/2/a+Math.pow(Math.pow(b,2)-4*a*c,0.5)/2/a;
+	t2=-b/2/a-Math.pow(Math.pow(b,2)-4*a*c,0.5)/2/a;
+	// t less than 1 means the intersection is between eye and the window
+	if (t1 == "NaN" && t2 == "NaN") {
+		return -1;
+	} else if (t1 == "NaN") {
+		if (t2 < 1){
+			return -1;
+		} else {
+			return t2;
+		}
+	} else if (t2 == "NaN") {
+		if (t1 < 1){
+			return -1;
+		} else {
+			return t1;
+		}
+	} else {
+		if (t1 < t2){
+			if (t2 < 1){
+				return -1;
+			} else if (t1 < 1) {
+				return t2;
+			} else {
+				return t1;
+			}
+		} else {
+			if (t1 < 1){
+				return -1;
+			} else if (t2 < 1) {
+				return t1;
+			} else {
+				return t2;
+			}
+		}
+	}
+}
+
+// draw 
+function draw(context) {
+	var inputSpheres = getInputSpheres();
+    var w = context.canvas.width;
+    var h = context.canvas.height;
+    var imagedata = context.createImageData(w,h);
+	var eye = new Point(0.5,0.5,-0.5*);
+	var light = new Point(2,4,-0.5);
+	var upperLeft = new Point(0,1,0);
+	var lowerRight = new Point(1,0,0);
+	var a1, b1, a2, b2, a3, b3 = 0;
+	
+	//loop over every pixel
+	for (var i=0; i<= w; i++) {
+		for (var j=0; j <= h; j++) {
+			
+			var c = new Color(0,0,0,0); // the color at the pixel: black
+			var t = 0;// t used to store the close intersect
+			var intersected = -1;// store the sequence number of the intersected sphere, -1 means no intersect
+			var x = i / w;// map each pixel to window , z coord is 0
+			var y = 1 - j / h;
+			// define a ray through this pixel and eye, which represented by x = a_x*t + b
+			a1 = x - 0.5; 
+			b1 = 0.5;
+			a2 = y - 0.5; 
+			b2 = 0.5;
+			a3 = 0.5;
+			b3 = -0.5
+			
+			// check if sphere found
+			if (inputSpheres != String.null) { 
+				
+				var n = inputSpheres.length; 
+				var c1,c2,c3 = 0;
+				var a,b,cc = 0;
+				// Loop over the spheres
+				// sphere equation (x-x1)^2+(y-y1)^2+(z-z1)^2=R^2
+				for (var s=0; s<n; s++) {
+					
+					c1 = b1 - inputSpheres[s].x; 
+					c2 = b2 - inputSpheres[s].y;
+					c3 = b3 - inputSpheres[s].z;
+					
+					a = (a1*a1 + a2*a2 + a3*a3);
+					b = 2*(a1*c1 + a2*c2 + a3*c3);
+					cc = c1*c1 + c2*c2 + c3*c3 - inputSpheres[s].r;
+					root = solveQuadra(a,b,cc);
+					
+					// first intersect
+					if (intersected == -1 && root != -1){
+						t = root;
+						intersected = s;
+						c.change(
+							inputSpheres[intersected].diffuse[0]*255,
+							inputSpheres[intersected].diffuse[1]*255,
+							inputSpheres[intersected].diffuse[2]*255,
+									255); 
+					} else if (root != -1 && root < t){
+						t = root;
+						intersected = s;
+						c.change(
+							inputSpheres[intersected].diffuse[0]*255,
+							inputSpheres[intersected].diffuse[1]*255,
+							inputSpheres[intersected].diffuse[2]*255,
+									255); 
+					}
+				} 
+			} 
+			//draw pixel
+			drawPixel(imagedata,i,j,c);
+		}
+	}	
+	context.putImageData(imagedata, 0, 0);
+}
+
+
 
 /* main -- here is where execution begins after window load */
 
 function main() {
+	
 
     // Get the canvas and context
     var canvas = document.getElementById("viewport"); 
@@ -206,6 +336,6 @@ function main() {
     //drawRandPixelsInInputSpheres(context);
       // shows how to draw pixels and read input file
       
-    drawInputSpheresUsingArcs(context);
+    //drawInputSpheresUsingArcs(context);
       // shows how to read input file, but not how to draw pixels
 }
