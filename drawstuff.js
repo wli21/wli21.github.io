@@ -12,6 +12,19 @@ class Point {
 	}
 }
 
+// Vector constructor
+class UnitVector {
+	constructor(x,y,z) {
+		try {
+			var l = Math.sqrt(x*x + y*y + z*z);
+			this.x = x/l, this.y = y/l, this.z = z/l;
+		}
+		catch (e) {
+			console.log(e);
+		}
+	}
+}
+
 // Color constructor
 class Color {
     constructor(r,g,b,a) {
@@ -77,27 +90,6 @@ function drawPixel(imagedata,x,y,color) {
     }
 } // end drawPixel
     
-// draw random pixels
-function drawRandPixels(context) {
-    var c = new Color(0,0,0,0); // the color at the pixel: black
-    var w = context.canvas.width;
-    var h = context.canvas.height;
-    var imagedata = context.createImageData(w,h);
-    const PIXEL_DENSITY = 0.01;
-    var numPixels = (w*h)*PIXEL_DENSITY; 
-    
-    // Loop over 1% of the pixels in the image
-    for (var x=0; x<numPixels; x++) {
-        c.change(Math.random()*255,Math.random()*255,
-            Math.random()*255,255); // rand color
-        drawPixel(imagedata,
-            Math.floor(Math.random()*w),
-            Math.floor(Math.random()*h),
-                c);
-    } // end for x
-    context.putImageData(imagedata, 0, 0);
-} // end draw random pixels
-
 // get the input spheres from the standard class URL
 function getInputSpheres() {
     const INPUT_SPHERES_URL = 
@@ -119,100 +111,14 @@ function getInputSpheres() {
         return JSON.parse(httpReq.response); 
 } // end get input spheres
 
-// put random points in the spheres from the class github
-function drawRandPixelsInInputSpheres(context) {
-    var inputSpheres = getInputSpheres();
-    var w = context.canvas.width;
-    var h = context.canvas.height;
-    var imagedata = context.createImageData(w,h);
-    const PIXEL_DENSITY = 0.01;
-    var numCanvasPixels = (w*h)*PIXEL_DENSITY; 
-    
-    if (inputSpheres != String.null) { 
-        var x = 0; var y = 0; // pixel coord init
-        var cx = 0; var cy = 0; // init center x and y coord
-        var sphereRadius = 0; // init sphere radius
-        var numSpherePixels = 0; // init num pixels in sphere
-        var c = new Color(0,0,0,0); // init the sphere color
-        var n = inputSpheres.length;
-        //console.log("number of spheres: " + n);
-
-        // Loop over the spheres, draw rand pixels in each
-        for (var s=0; s<n; s++) {
-            cx = w*inputSpheres[s].x; // sphere center x
-            cy = h*inputSpheres[s].y; // sphere center y
-            sphereRadius = Math.round(w*inputSpheres[s].r); // radius
-            numSpherePixels = sphereRadius*4*Math.PI; // sphere area
-            numSpherePixels *= PIXEL_DENSITY; // percentage of sphere on
-            numSpherePixels = Math.round(numSpherePixels);
-            //console.log("sphere radius: "+sphereRadius);
-            //console.log("num sphere pixels: "+numSpherePixels);
-            c.change(
-                inputSpheres[s].diffuse[0]*255,
-                inputSpheres[s].diffuse[1]*255,
-                inputSpheres[s].diffuse[2]*255,
-                255); // rand color
-            for (var p=0; p<numSpherePixels; p++) {
-                do {
-                    x = Math.random()*2 - 1; // in unit square 
-                    y = Math.random()*2 - 1; // in unit square
-                } while (Math.sqrt(x*x + y*y) > 1)
-                drawPixel(imagedata,
-                    cx+Math.round(x*sphereRadius),
-                    cy+Math.round(y*sphereRadius),c);
-                //console.log("color: ("+c.r+","+c.g+","+c.b+")");
-                //console.log("x: "+Math.round(w*inputSpheres[s].x));
-                //console.log("y: "+Math.round(h*inputSpheres[s].y));
-            } // end for pixels in sphere
-        } // end for spheres
-        context.putImageData(imagedata, 0, 0);
-    } // end if spheres found
-} // end draw rand pixels in input spheres
-
-// draw 2d projections read from the JSON file at class github
-function drawInputSpheresUsingArcs(context) {
-    var inputSpheres = getInputSpheres();
-    
-    
-    if (inputSpheres != String.null) { 
-        var c = new Color(0,0,0,0); // the color at the pixel: black
-        var w = context.canvas.width;
-        var h = context.canvas.height;
-        var n = inputSpheres.length; 
-        //console.log("number of spheres: " + n);
-
-        // Loop over the spheres, draw each in 2d
-        for (var s=0; s<n; s++) {
-            context.fillStyle = 
-                "rgb(" + Math.floor(inputSpheres[s].diffuse[0]*255)
-                +","+ Math.floor(inputSpheres[s].diffuse[1]*255)
-                +","+ Math.floor(inputSpheres[s].diffuse[2]*255) +")"; // rand color
-            context.beginPath();
-            context.arc(
-                Math.round(w*inputSpheres[s].x),
-                Math.round(h*inputSpheres[s].y),
-                Math.round(w*inputSpheres[s].r),
-                0,2*Math.PI);
-            context.fill();
-            //console.log(context.fillStyle);
-            //console.log("x: "+Math.round(w*inputSpheres[s].x));
-            //console.log("y: "+Math.round(h*inputSpheres[s].y));
-            //console.log("r: "+Math.round(w*inputSpheres[s].r));
-        } // end for spheres
-    } // end if spheres found
-} // end draw input spheres
-
 // solve a quadratic equation, return the smallest positive t value that greater or equal to 1,
 // or -1, which means no intersect
 function solveQuadra(a,b,c) {
-	
-	//console.log("a= "+a+" b= "+b+" c= "+c);
-	
+		
 	var ret = -1;
-	t1=-b/2/a+Math.pow(Math.pow(b,2)-4*a*c,0.5)/2/a;
-	t2=-b/2/a-Math.pow(Math.pow(b,2)-4*a*c,0.5)/2/a;
+	t1=-b/2/a+Math.sqrt(Math.pow(b,2)-4*a*c)/2/a;
+	t2=-b/2/a-Math.sqrt(Math.pow(b,2)-4*a*c)/2/a;
 	
-	//console.log("t1 = " + t1+"t2 = " + t2);
 	// t less than 1 means the intersection is between eye and the window
 	if (isNaN(t1) && isNaN(t2)) {
 	} else if (isNaN(t1)) {
@@ -242,11 +148,12 @@ function solveQuadra(a,b,c) {
 		}
 	}
 	
-	//if (ret != -1){
-		//console.log(ret);
-	//}
-	
 	return ret;
+}
+
+// compute dot product
+function dotProduct(a,b) {
+	return a.x * b.x + a.y * b.y + a.z * b.z;	
 }
 
 // draw 
@@ -256,22 +163,28 @@ function draw(context) {
     var h = context.canvas.height;
     var imagedata = context.createImageData(w,h);
 	var eye = new Point(0.5,0.5,-0.5);
-	var light = new Point(2,4,-0.5);
+	var light = new Point(1,1,-0.5);
 	var upperLeft = new Point(0,1,0);
 	var lowerRight = new Point(1,0,0);
+	var m = 10;
 	var a1, b1, a2, b2, a3, b3 = 0;
+	
+	// check if sphere file found
+	if (inputSpheres == String.null) { 
+		alert("NO INPUT SPHERE");
+	}
 	
 	//loop over every pixel
 	for (var i=0; i< w; i++) {
 		for (var j=0; j < h; j++) {
 			
-			var c = new Color(0,0,0,0); // the color at the pixel: black
+			var c = new Color(0,0,0,255); // the color at the pixel: black
 			var t = 0;// t used to store the close intersect
 			var intersected = -1;// store the sequence number of the intersected sphere, -1 means no intersect
 			var x = i / w;// map each pixel to window , z coord is 0
 			var y = 1 - j / h;
 			var z = 0;
-			// define a ray through this pixel and eye, which represented by x = a_x*t + b
+			// define a ray through this pixel and eye, which represented by x = a*t + b
 			a1 = x - eye.x; 
 			b1 = eye.x;
 			a2 = y - eye.y; 
@@ -279,72 +192,83 @@ function draw(context) {
 			a3 = z - eye.z;
 			b3 = eye.z;
 			
-			// check if sphere found
-			if (inputSpheres != String.null) { 
-				
-				var n = inputSpheres.length; 
-				var c1,c2,c3 = 0;
-				var a,b,cc = 0;
-				// Loop over the spheres
-				// sphere equation (x-x1)^2+(y-y1)^2+(z-z1)^2=R^2
-				for (var s=0; s<n; s++) {
+			var n = inputSpheres.length; 
+			var c1,c2,c3 = 0;
+			var a,b,cc = 0;
+			// Loop over the spheres
+			// sphere equation (x-x1)^2+(y-y1)^2+(z-z1)^2=R^2
+			for (var s=0; s<n; s++) {
 					
-					c1 = b1 - inputSpheres[s].x; 
-					c2 = b2 - inputSpheres[s].y;
-					c3 = b3 - inputSpheres[s].z;
+				c1 = b1 - inputSpheres[s].x; 
+				c2 = b2 - inputSpheres[s].y;
+				c3 = b3 - inputSpheres[s].z;
 					
-					a = (a1*a1 + a2*a2 + a3*a3);
-					b = 2*(a1*c1 + a2*c2 + a3*c3);
-					cc = c1*c1 + c2*c2 + c3*c3 - inputSpheres[s].r * inputSpheres[s].r;
-					var root = solveQuadra(a,b,cc);
+				a = (a1*a1 + a2*a2 + a3*a3);
+				b = 2*(a1*c1 + a2*c2 + a3*c3);
+				cc = c1*c1 + c2*c2 + c3*c3 - inputSpheres[s].r * inputSpheres[s].r;
+				var root = solveQuadra(a,b,cc);
 					
-					//if (i > 200 && i< 300 && j > 200 && j < 300){
-					//console.log("root for a= "+a+" b= "+b+" c= " + cc + "is " + root);
-					//}
-					
-					if (root != -1){
-						if (intersected == -1 || root < t){
-							intersected = s;
-							t = root;
-							c.change(
-							inputSpheres[intersected].diffuse[0]*255,
-							inputSpheres[intersected].diffuse[1]*255,
-							inputSpheres[intersected].diffuse[2]*255,
-									255); 
+				// ray - sphere interesect
+				if (root != -1){
+					if (intersected == -1 || root < t){
+						intersected = s; 
+						t = root; // rember the intersect
+						
+						// compute the point of intersection
+						var intersect = new Point(a1*t+b1, a2*t+b2, a3*t+b3);
+						//compute the light, view, and normal vector
+						var v_l = new UnitVector(light.x - intersect.x,
+												light.y - intersect.y,
+												light.z - intersect.z
+												); 
+						var v_v = new UnitVector(eye.x - intersect.x,
+												eye.y - intersect.y,
+												eye.z - intersect.z
+												); 
+						var v_n = new UnitVector(intersect.x - inputSpheres[intersected].x,
+												intersect.y - inputSpheres[intersected].y,
+												intersect.z -inputSpheres[intersected].z
+												); 
+						var v_h = new UnitVector((v_l.x + v_v.x)/2,
+												(v_l.y + v_v.y)/2,
+												(v_l.z + v_v.z)/2
+												);
+							
+						var k_d = dotProduct(v_n,v_l);
+						var k_s = Math.pow(dotProduct(v_n,v_h), m);
+						
+						if (k_d < 0) {
+							k_d = 0;
 						}
+						
+						if (k_s < 0) {
+							k_s = 0;
+						}
+							
+						c.change(
+							inputSpheres[intersected].ambient[0]*255 + inputSpheres[intersected].diffuse[0]*255*k_d + inputSpheres[intersected].specular[0]*255*k_s,
+							inputSpheres[intersected].ambient[1]*255 + inputSpheres[intersected].diffuse[1]*255*k_d + inputSpheres[intersected].specular[1]*255*k_s,
+							inputSpheres[intersected].ambient[2]*255 + inputSpheres[intersected].diffuse[2]*255*k_d + inputSpheres[intersected].specular[2]*255*k_s,
+								255); 
+						
 					}
-				} 
-				
+				}
 			} 
+			
+			
 			//draw pixel
 			drawPixel(imagedata,i,j,c);
-			c.change(0,0,0,0);
+			c.change(0,0,0,255);
 		}
 	}	
 	context.putImageData(imagedata, 0, 0);
 }
 
-
-
-/* main -- here is where execution begins after window load */
-
 function main() {
 	
-
     // Get the canvas and context
     var canvas = document.getElementById("viewport"); 
     var context = canvas.getContext("2d");
  
- 
 	draw(context);
-	
-    // Create the image
-    //drawRandPixels(context);
-      // shows how to draw pixels
-    
-    //drawRandPixelsInInputSpheres(context);
-      // shows how to draw pixels and read input file
-      
-    //drawInputSpheresUsingArcs(context);
-      // shows how to read input file, but not how to draw pixels
 }
