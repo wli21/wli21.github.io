@@ -387,6 +387,7 @@ function main() {
 	
 	
 	var look_x,look_y,look_z = 0
+	var l_t = new UnitVector(0,0,0);
 	// look at
 	if (get("look_x").value!="") look_x = parseFloat(get("look_x").value);
 	if (get("look_y").value!="") look_y = parseFloat(get("look_y").value);
@@ -394,16 +395,11 @@ function main() {
 	if (isNaN(look_x) || isNaN(look_y) || isNaN(look_z)){
 		alert("invalid look at vector");
 	} else {
-		var l_t = new UnitVector(look_x,look_y,look_z);
-		
-		if (dotProduct(view,l_t) > 1e-16 ){
-			alert("view up and look at vector must be orthnormal");
-		} else{
-			view.change(look_x,look_y,look_z);
-		}
+		l_t.change(look_x,look_y,look_z);
 	}
 	
 	var view_x,view_y,view_z = 0;
+	var v_t = new UnitVector(0,0,0);
 	// view up
 	if (get("view_x").value!="") view_x = parseFloat(get("view_x").value);
 	if (get("view_y").value!="") view_y = parseFloat(get("view_y").value);
@@ -411,14 +407,16 @@ function main() {
 	if(isNaN(view_x) || isNaN(view_y) || isNaN(view_z)){
 		alert("invalid view up vector");
 	}else{
-		var v_t = new UnitVector(view_x,view_y,view_z);
-		
-		if (dotProduct(v_t,look) > 1e-16 ){
-			alert("view up and look at vector must be orthnormal");
-		} else{
-			view.change(view_x,view_y,view_z);
-		}
+		v_t.change(view_x,view_y,view_z);
 	}
+	
+	if (dotProduct(v_t,l_t) > 1e-16 ){
+		alert("view up and look at vector must be orthnormal");
+	} else{
+		view.change(v_t.x,v_t.y,v_t.z);
+		look.change(l_t.x,l_t.y,l_t.z);
+	}
+	
 	
 	// window
 	var l,r,t,b = 0;
