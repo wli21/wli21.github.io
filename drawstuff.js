@@ -394,7 +394,13 @@ function main() {
 	if (isNaN(look_x) || isNaN(look_y) || isNaN(look_z)){
 		alert("invalid look at vector");
 	} else {
-		look.change(look_x,look_y,look_z);
+		var l_t = new UnitVector(look_x,look_y,look_z);
+		
+		if (dotProduct(view,l_t) > 1e-16 ){
+			alert("view up and look at vector must be orthnormal");
+		} else{
+			view.change(look_x,look_y,look_z);
+		}
 	}
 	
 	var view_x,view_y,view_z = 0;
