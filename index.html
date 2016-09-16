@@ -7,5 +7,91 @@
 </head>
 <body onload="main();">
 <canvas id="viewport" width="512" height="512"></canvas>
+
+<table>
+  <tr>
+    <td>Canvas</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td>
+    <td>width <input type=text size=6 id="width" value=512 />
+</td> <td></td>
+    <td>height <input type=text size=6 id="height" value=512 />
+</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr></tr>
+  <tr>
+    <td>Eye location</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td>
+    <td>x <input type=text size=6 id="eye_x" value = 0.5 />
+</td>
+    <td>y <input type=text size=6 id="eye_y" value= 0.5 />
+</td>
+    <td>z <input type=text size=6 id="eye_z" value= -0.5 />
+</td>
+    <td></td>
+  </tr><tr></tr>
+  <tr>
+    <td>Look at vector</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td>
+    <td>x <input type=text size=6 id="look_x" value= 0 />
+</td>
+    <td>y <input type=text size=6 id="look_y" value= 0 />
+</td>
+    <td>z <input type=text size=6 id="look_z" value= 1 />
+</td>
+    <td></td>
+  </tr><tr></tr>
+  <tr>
+    <td>View up vector</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td>
+    <td>x <input type=text size=6 id="view_x" value= 0 />
+</td>
+    <td>y <input type=text size=6 id="view_y" value= 1 />
+</td>
+    <td>z <input type=text size=6 id="view_z" value= 0 />
+</td>
+    <td></td>
+  </tr><tr></tr>
+  <tr>
+    <td>Window</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td>
+    <td>left <input type=text size=6 id="left" value= 0.5 />
+</td>
+    <td>right <input type=text size=6 id="right" value= 0.5 />
+</td>
+    <td>top <input type=text size=6 id="top" value= 0.5 />
+</td>
+    <td>bottom <input type=text size=6 id="bottom" value= 0.5 />
+</td>
+  </tr><tr></tr>
+  <tr>
+	<td></td>
+	<td><button onclick="main();">Render</button></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
 </body>
 </html>
