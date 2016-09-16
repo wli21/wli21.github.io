@@ -1,3 +1,9 @@
+/**
+ * Homework 1
+ * Weijia Li 
+ * CSC 561 - Fall 2016
+ */
+
 /* classes */ 
 
 // Point constructor
