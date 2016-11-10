@@ -365,24 +365,25 @@ function loadModels() {
 } // end load models
 
 // create a webgl texture object from an image
-var getTexture = function(image_URL) {
-	var image=new Image();
-    image.src=image_URL;
-    image.webglTexture=false;
-	
-    image.onload=function(e) {
+ function handleLoadedTexture(texture) {
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.bindTexture(gl.TEXTURE_2D, null);
+    }
 
-      var texture=gl.createTexture();
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.bindTexture(gl.TEXTURE_2D, null);
-      image.webglTexture=texture;
-    };
-    return image;
-};
+var neheTexture;
+
+function initTexture() {
+    neheTexture = gl.createTexture();
+    neheTexture.image = new Image();
+    neheTexture.image.onload = function () {
+		handleLoadedTexture(neheTexture)
+    }
+    neheTexture.image.src = "resources/earth.jpg";
+}
 
 // setup the webGL shaders
 function setupShaders() {
@@ -575,8 +576,7 @@ function renderModels() {
 
 		//texture
 		gl.activeTexture(gl.TEXTURE0);
-        var texture=getTexture("resources/earth.jpg");	
-        gl.bindTexture(gl.TEXTURE_2D, texture.webglTexture);
+        gl.bindTexture(gl.TEXTURE_2D, neheTexture);
         gl.uniform1i(samplerULoc, 0);
 		
         // triangle buffer: activate and render
@@ -619,8 +619,7 @@ function renderModels() {
 
 		//texture
 		gl.activeTexture(gl.TEXTURE0);
-		var texture=getTexture("resources/earth.jpg");	
-        gl.bindTexture(gl.TEXTURE_2D, texture.webglTexture);
+        gl.bindTexture(gl.TEXTURE_2D, neheTexture);
         gl.uniform1i(samplerULoc, 0);
 		
         // draw a transformed instance of the sphere
