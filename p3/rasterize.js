@@ -575,7 +575,7 @@ function renderModels() {
 
 		//texture
 		gl.activeTexture(gl.TEXTURE0);
-        var texture=get_texture("resources/earth.jpg");	
+        var texture=getTexture("resources/earth.jpg");	
         gl.bindTexture(gl.TEXTURE_2D, texture.webglTexture);
         gl.uniform1i(samplerULoc, 0);
 		
@@ -619,7 +619,7 @@ function renderModels() {
 
 		//texture
 		gl.activeTexture(gl.TEXTURE0);
-		var texture=get_texture("resources/earth.jpg");	
+		var texture=getTexture("resources/earth.jpg");	
         gl.bindTexture(gl.TEXTURE_2D, texture.webglTexture);
         gl.uniform1i(samplerULoc, 0);
 		
