@@ -365,7 +365,7 @@ function loadModels() {
 } // end load models
 
 // create a webgl texture object from an image
-function getTexture(image_URL) {
+var getTexture = function(image_URL) {
 	var image=new Image();
     image.src=image_URL;
     image.webglTexture=false;
@@ -382,7 +382,7 @@ function getTexture(image_URL) {
       image.webglTexture=texture;
     };
     return image;
-}
+};
 
 // setup the webGL shaders
 function setupShaders() {
@@ -575,7 +575,8 @@ function renderModels() {
 
 		//texture
 		gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, getTexture("resources/earth.jpg").webglTexture);
+        var texture=get_texture("resources/earth.jpg");	
+        gl.bindTexture(gl.TEXTURE_2D, texture.webglTexture);
         gl.uniform1i(samplerULoc, 0);
 		
         // triangle buffer: activate and render
@@ -618,7 +619,8 @@ function renderModels() {
 
 		//texture
 		gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, getTexture("resources/earth.jpg").webglTexture);
+		var texture=get_texture("resources/earth.jpg");	
+        gl.bindTexture(gl.TEXTURE_2D, texture.webglTexture);
         gl.uniform1i(samplerULoc, 0);
 		
         // draw a transformed instance of the sphere
