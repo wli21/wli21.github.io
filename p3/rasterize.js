@@ -692,6 +692,7 @@ function main() {
   setupWebGL(); // set up the webGL environment
   loadModels(); // load in the models from tri file
   setupShaders(); // setup the webGL shaders
+  initTexture();
   renderModels(); // draw the triangles using webGL
   
 } // end main
