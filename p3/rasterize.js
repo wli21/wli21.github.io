@@ -590,7 +590,7 @@ function renderModels() {
     gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffers[vertexBuffers.length-1]); // activate vertex buffer
     gl.vertexAttribPointer(vPosAttribLoc,3,gl.FLOAT,false,0,0); // feed vertex buffer to shader
 	
-	gl.bindBuffer(gl.ARRAY_BUFFER,textureBuffers[vertexBuffers.length-1]);
+	gl.bindBuffer(gl.ARRAY_BUFFER,textureBuffers[textureBuffers.length-1]);
 	gl.vertexAttribPointer(vTextureAttribLoc,2,gl.FLOAT,false,0,0); 
 	
     gl.bindBuffer(gl.ARRAY_BUFFER,normalBuffers[normalBuffers.length-1]); // activate normal buffer
