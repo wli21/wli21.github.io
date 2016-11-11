@@ -382,7 +382,7 @@ function initTexture() {
     neheTexture.image.onload = function () {
 		handleLoadedTexture(neheTexture)
     }
-    neheTexture.image.src = "resources/earth.jpg";
+    neheTexture.image.src = "resources/nehe.gif";
 }
 
 // setup the webGL shaders
