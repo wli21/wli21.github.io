@@ -585,7 +585,7 @@ function renderModels() {
 		var img = new Image();
 		img.src = "resources/nehe.gif";
 	
-		img.onLoad.listen((e) {
+		img.onload = function() {
 			gl.bindTexture(gl.TEXTURE_2D, texture);
 			gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
@@ -602,7 +602,7 @@ function renderModels() {
 			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,triangleBuffers[whichTriSet]); // activate
 			gl.drawElements(gl.TRIANGLES,3*triSetSizes[whichTriSet],gl.UNSIGNED_SHORT,0); // render
 
-		});
+		}
 		        
     } // end for each triangle set
     
@@ -644,7 +644,7 @@ function renderModels() {
 		var img = new Image();
 		img.src = "resources/nehe.gif";
 	
-		img.onLoad.listen((e) {
+		img.onload = function() {
 		
 		gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
@@ -660,7 +660,7 @@ function renderModels() {
         // draw a transformed instance of the sphere
         gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
 
-		});
+		}
 		
 		
 		
