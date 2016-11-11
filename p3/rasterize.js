@@ -575,6 +575,7 @@ function renderModels() {
         gl.vertexAttribPointer(vNormAttribLoc,3,gl.FLOAT,false,0,0); // feed
 
 		//texture
+		initTexture();
 		gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, neheTexture);
         gl.uniform1i(samplerULoc, 0);
@@ -624,7 +625,7 @@ function renderModels() {
         gl.uniform1i(samplerULoc, 0);
 		
         // draw a transformed instance of the sphere
-        //gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
+        gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
     } // end for each sphere
 } // end render model
 
