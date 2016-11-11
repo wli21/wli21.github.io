@@ -637,13 +637,27 @@ function renderModels() {
         gl.uniformMatrix4fv(pvmMatrixULoc, false, hpvmMatrix); // pass in handed project view model matrix
 
 		//texture
-		initTexture();
-		gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, neheTexture);
-        gl.uniform1i(samplerULoc, 0);
+		neheTexture = gl.createTexture();
 		
-        // draw a transformed instance of the sphere
-        gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
+		neheTexture.image = new Image();
+		neheTexture.image.src = "resources/nehe.gif";
+	
+		neheTexture.image.onload = function () {
+			gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+			gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, neheTexture.image);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+			gl.bindTexture(gl.TEXTURE_2D, null);
+		
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+			gl.uniform1i(samplerULoc, 0);
+		
+			// draw a transformed instance of the sphere
+			gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
+		}
+		
     } // end for each sphere
 } // end render model
 
