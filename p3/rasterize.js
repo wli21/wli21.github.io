@@ -639,11 +639,11 @@ function renderModels() {
         gl.uniformMatrix4fv(pvmMatrixULoc, false, hpvmMatrix); // pass in handed project view model matrix
 
 		//texture
+		/*
 		var texture = gl.createTexture();
-	
 		var img = new Image();
 		img.src = "resources/nehe.gif";
-	
+		
 		img.onload = function() {
 		
 		gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -660,7 +660,16 @@ function renderModels() {
         // draw a transformed instance of the sphere
         gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
 
-		}
+		}*/
+		
+		initTexture();
+		gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+        gl.uniform1i(samplerULoc, 0);
+		
+        // draw a transformed instance of the sphere
+        gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
+
 		
 		
 		
