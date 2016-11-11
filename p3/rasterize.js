@@ -580,7 +580,7 @@ function renderModels() {
         gl.vertexAttribPointer(vNormAttribLoc,3,gl.FLOAT,false,0,0); // feed
 
 		//texture
-		var texture = gl.createTexture();
+		/*var texture = gl.createTexture();
 	
 		var img = new Image();
 		img.src = "resources/nehe.gif";
@@ -602,7 +602,16 @@ function renderModels() {
 			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,triangleBuffers[whichTriSet]); // activate
 			gl.drawElements(gl.TRIANGLES,3*triSetSizes[whichTriSet],gl.UNSIGNED_SHORT,0); // render
 
-		}
+		}*/
+		
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+		gl.uniform1i(samplerULoc, 0);
+		
+		// triangle buffer: activate and render
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,triangleBuffers[whichTriSet]); // activate
+		gl.drawElements(gl.TRIANGLES,3*triSetSizes[whichTriSet],gl.UNSIGNED_SHORT,0); // render
+
 		        
     } // end for each triangle set
     
@@ -662,7 +671,6 @@ function renderModels() {
 
 		}*/
 		
-		initTexture();
 		gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, neheTexture);
         gl.uniform1i(samplerULoc, 0);
