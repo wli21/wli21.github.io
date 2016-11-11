@@ -618,6 +618,7 @@ function renderModels() {
         gl.uniformMatrix4fv(pvmMatrixULoc, false, hpvmMatrix); // pass in handed project view model matrix
 
 		//texture
+		initTexture();
 		gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, neheTexture);
         gl.uniform1i(samplerULoc, 0);
