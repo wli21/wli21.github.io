@@ -384,7 +384,7 @@ function initTexture() {
     neheTexture.image.onload = function () {
 		handleLoadedTexture(neheTexture)
     }
-    neheTexture.image.src = "resources/nehe.gif";
+    neheTexture.image.src = "resources/earth.jpg";
 }
 
 // setup the webGL shaders
@@ -627,7 +627,7 @@ function renderModels() {
         gl.uniform1i(samplerULoc, 0);
 		
         // draw a transformed instance of the sphere
-        gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
+        //gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
     } // end for each sphere
 } // end render model
 
