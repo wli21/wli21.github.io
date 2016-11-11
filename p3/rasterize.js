@@ -34,6 +34,7 @@ var mMatrixULoc; // where to put model matrix for vertex shader
 var pvmMatrixULoc; // where to put project model view matrix for vertex shader
 var vTextureAttribLoc;
 var samplerULoc;
+var vNormAttribLoc;
 
 
 /* interaction variables */
@@ -203,19 +204,20 @@ function loadModels() {
 				u = asin(x)/PI + 0.5 
 				v = asin(y)/PI + 0.5 
 				*/
-				var sphereTextureUVs = [Math.asin(0)/Math.PI + 0.5,Math.asin(-1)/Math.PI + 0.5];			
+				var sphereTextureUVs = [0.5,0];			
                 var angleIncr = (Math.PI+Math.PI) / numLongSteps; // angular increment 
                 var latLimitAngle = angleIncr * (Math.floor(numLongSteps/4)-1); // start/end lat angle
                 var latRadius, latY; // radius and Y at current latitude
                 for (var latAngle=-latLimitAngle; latAngle<=latLimitAngle; latAngle+=angleIncr) {
                     latRadius = Math.cos(latAngle); // radius of current latitude
                     latY = Math.sin(latAngle); // height at current latitude
-                    for (var longAngle=0; longAngle<2*Math.PI; longAngle+=angleIncr) // for each long
+                    for (var longAngle=0; longAngle<2*Math.PI; longAngle+=angleIncr){ // for each long
                         sphereVertices.push(latRadius*Math.sin(longAngle),latY,latRadius*Math.cos(longAngle));
 						sphereTextureUVs.push(Math.asin(latRadius*Math.sin(longAngle))/Math.PI + 0.5,Math.asin(latY)/Math.PI + 0.5);
-                } // end for each latitude
+					}            
+				} // end for each latitude
                 sphereVertices.push(0,1,0); // add north pole
-				sphereTextureUVs.push(Math.asin(0)/Math.PI + 0.5,Math.asin(1)/Math.PI + 0.5);
+				sphereTextureUVs.push(0.5,1);
                 var sphereNormals = sphereVertices.slice(); // for this sphere, vertices = normals; return these
 
                 // make triangles, from south pole to middle latitudes to north pole
