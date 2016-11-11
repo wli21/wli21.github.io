@@ -380,6 +380,11 @@ var neheTexture;
 
 function initTexture() {
     neheTexture = gl.createTexture();
+	
+	gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+              new Uint8Array([255, 0, 0, 255])); // red
+	
     neheTexture.image = new Image();
     neheTexture.image.onload = function () {
 		handleLoadedTexture(neheTexture)
