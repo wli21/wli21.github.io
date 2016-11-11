@@ -638,7 +638,11 @@ function renderModels() {
 
 		//texture
 		neheTexture = gl.createTexture();
-		
+	
+		gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+              new Uint8Array([255, 0, 0, 255])); // red
+	
 		neheTexture.image = new Image();
 		neheTexture.image.src = "resources/nehe.gif";
 	
@@ -650,14 +654,18 @@ function renderModels() {
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 			gl.bindTexture(gl.TEXTURE_2D, null);
 		
-			gl.activeTexture(gl.TEXTURE0);
-			gl.bindTexture(gl.TEXTURE_2D, neheTexture);
-			gl.uniform1i(samplerULoc, 0);
 		
-			// draw a transformed instance of the sphere
-			gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
 		}
 		
+		
+		
+		gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+        gl.uniform1i(samplerULoc, 0);
+		
+		
+        // draw a transformed instance of the sphere
+        gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
     } // end for each sphere
 } // end render model
 
