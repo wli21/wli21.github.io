@@ -377,7 +377,7 @@ function initTexture() {
               new Uint8Array([255, 0, 0, 255])); // red
 	
     neheTexture.image = new Image();
-	neheTexture.image.src = "resources/nehe.gif";
+	neheTexture.image.src = "resources/earth.jpg";
 	
     neheTexture.image.onload = function () {
 		gl.bindTexture(gl.TEXTURE_2D, neheTexture);
