@@ -596,12 +596,11 @@ function renderModels() {
 			gl.activeTexture(gl.TEXTURE0);
 			gl.bindTexture(gl.TEXTURE_2D, neheTexture);
 			gl.uniform1i(samplerULoc, 0);
+			
+			// triangle buffer: activate and render
+			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,triangleBuffers[whichTriSet]); // activate
+			gl.drawElements(gl.TRIANGLES,3*triSetSizes[whichTriSet],gl.UNSIGNED_SHORT,0); // render
 		}
-		
-		
-        // triangle buffer: activate and render
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,triangleBuffers[whichTriSet]); // activate
-        gl.drawElements(gl.TRIANGLES,3*triSetSizes[whichTriSet],gl.UNSIGNED_SHORT,0); // render
         
     } // end for each triangle set
     
