@@ -580,15 +580,33 @@ function renderModels() {
         gl.vertexAttribPointer(vNormAttribLoc,3,gl.FLOAT,false,0,0); // feed
 
 		//texture
-		initTexture();
-		gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, neheTexture);
-        gl.uniform1i(samplerULoc, 0);
+		neheTexture = gl.createTexture();
+	
+		neheTexture.image = new Image();
+		neheTexture.image.src = "resources/nehe.gif";
+	
+		neheTexture.image.onload = function () {
+			gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+			gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, neheTexture.image);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+			gl.bindTexture(gl.TEXTURE_2D, null);
+			
 		
-        // triangle buffer: activate and render
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,triangleBuffers[whichTriSet]); // activate
-        gl.drawElements(gl.TRIANGLES,3*triSetSizes[whichTriSet],gl.UNSIGNED_SHORT,0); // render
-        
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+			gl.uniform1i(samplerULoc, 0);
+		
+			// triangle buffer: activate and render
+			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,triangleBuffers[whichTriSet]); // activate
+			gl.drawElements(gl.TRIANGLES,3*triSetSizes[whichTriSet],gl.UNSIGNED_SHORT,0); // render
+
+		}
+		
+		
+		
+		        
     } // end for each triangle set
     
     // render each sphere
@@ -645,14 +663,11 @@ function renderModels() {
         // draw a transformed instance of the sphere
         gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
 
+		}
 		
 		
 		
-    }
-		
-		
-		
-		    } // end for each sphere
+	} // end for each sphere
 } // end render model
 
 
