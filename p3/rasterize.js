@@ -638,13 +638,9 @@ function renderModels() {
 
 		//texture
 		initTexture();
-		
-		
-		
 		gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, neheTexture);
         gl.uniform1i(samplerULoc, 0);
-		
 		
         // draw a transformed instance of the sphere
         gl.drawElements(gl.TRIANGLES,triSetSizes[triSetSizes.length-1],gl.UNSIGNED_SHORT,0); // render
