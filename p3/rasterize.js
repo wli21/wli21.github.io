@@ -386,11 +386,11 @@ function initTexture() {
     img.onload = function () {
 		gl.bindTexture(gl.TEXTURE_2D, neheTexture);
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, neheTexture.image);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
         
 		// the dimensions are power of 2 so generate mips and turn on 
 		// tri-linear filtering.
-		if (isPowerOf2(img.width) && isPowerOf2(img.height) {
+		if (isPowerOf2(img.width) && isPowerOf2(img.height)){
 			gl.generateMipmap(gl.TEXTURE_2D);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 		} else {
