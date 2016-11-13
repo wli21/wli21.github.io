@@ -184,6 +184,10 @@ function setupWebGL() {
  
 } // end setupWebGL
 
+function isPowerOf2(n) {
+  return (n & (n - 1)) == 0;
+}
+
 // read models in, load them into webgl buffers
 function loadModels() {
     
@@ -376,16 +380,28 @@ function initTexture() {
 	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
               new Uint8Array([255, 0, 0, 255])); // red
 	
-    neheTexture.image = new Image();
-	neheTexture.image.src = "resources/earth.jpg";
+    var img = new Image();
+	img.src = "resources/earth.jpg";
 	
-    neheTexture.image.onload = function () {
+    img.onload = function () {
 		gl.bindTexture(gl.TEXTURE_2D, neheTexture);
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, neheTexture.image);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-        gl.bindTexture(gl.TEXTURE_2D, null);
+        
+		// the dimensions are power of 2 so generate mips and turn on 
+		// tri-linear filtering.
+		if (isPowerOf2(img.width) && isPowerOf2(img.height) {    
+			gl.generateMipmap(gl.TEXTURE_2D);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+		} else {
+			// at least one of the dimensions is not a power of 2 so set the filtering
+			// so WebGL will render it.
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+		}
+		
+		gl.bindTexture(gl.TEXTURE_2D, null);
     }
     
 }
