@@ -2,14 +2,11 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize( 600, 500 );
+renderer.setSize( window.innerWidth, window.innerHeight * 6/7 );
 document.body.appendChild( renderer.domElement );
 
-//load textures
-var backgroundTexture = new THREE.TextureLoader().load( 'images/froggerbackground.png' );
-
 //load geometries
-var backgroundGeometry = new THREE.BoxGeometry(6, 7, 0.1);
+var backgroundGeometry = new THREE.BoxGeometry(7, 7, 0.1);
 var frogGeometry = new THREE.BoxGeometry( .25, .25, .1);
 var cubeGeometry = new THREE.BoxGeometry( .5, .4, .25 );
 var shortBoxGeometry = new THREE.BoxGeometry( .75, .4, .25);
@@ -17,17 +14,18 @@ var mediumBoxGeometry = new THREE.BoxGeometry( 1.5, .4, .25);
 var longBoxGeometry = new THREE.BoxGeometry( 2, .5, .25);
 
 //create materials
-var backgroundMaterial = new THREE.MeshBasicMaterial( { map: backgroundTexture } );
-var frogMaterial = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 )} );
+var backgroundMaterial = new THREE.MeshBasicMaterial( { color: new THREE.Color( "#B0BBBF" ) } );
+var frogMaterial = new THREE.MeshBasicMaterial( { color: new THREE.Color( "#42f450" )} );
 var car1Material = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 ) } );
 var car2Material = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 ) } );
 var car3Material = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 ) } );
 var car4Material = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 ) } );
 var car5Material = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 ) } );
-var log1Material = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 ) } );
+var logMaterial = new THREE.MeshBasicMaterial( { color: new THREE.Color( "#f4b342" ) } );
 var padMaterial = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 ) } );
 var turtleMaterial = new THREE.MeshBasicMaterial( { color: new THREE.Color( 1, 0, 0 )} );
 var starMaterial = new THREE.MeshBasicMaterial( {color: new THREE.Color( 1, 0, 0 ) } );
+
 //create objects
 var gameObjects = [];
 var origPos = [];
@@ -48,11 +46,11 @@ var car4b = new THREE.Mesh( cubeGeometry, car4Material );
 var car4c = new THREE.Mesh( cubeGeometry, car4Material );
 var car5a = new THREE.Mesh( mediumBoxGeometry, car5Material );
 var car5b = new THREE.Mesh( mediumBoxGeometry, car5Material );
-var log1a = new THREE.Mesh( longBoxGeometry, log1Material );
-var log2a = new THREE.Mesh( mediumBoxGeometry, log1Material );
-var log2b = new THREE.Mesh( mediumBoxGeometry, log1Material );
-var log3a = new THREE.Mesh( mediumBoxGeometry, log1Material );
-var log5a = new THREE.Mesh( longBoxGeometry, log1Material );
+var log1a = new THREE.Mesh( longBoxGeometry, logMaterial );
+var log2a = new THREE.Mesh( mediumBoxGeometry, logMaterial );
+var log2b = new THREE.Mesh( mediumBoxGeometry, logMaterial );
+var log3a = new THREE.Mesh( mediumBoxGeometry, logMaterial );
+var log5a = new THREE.Mesh( longBoxGeometry, logMaterial );
 var pad1 = new THREE.Mesh( frogGeometry, padMaterial );
 var pad2 = new THREE.Mesh( frogGeometry, padMaterial );
 var pad3 = new THREE.Mesh( frogGeometry, padMaterial );
