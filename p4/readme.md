@@ -1,5 +1,12 @@
 I don't want my game public.
 
+w - forward
+s - backward
+a - left
+d - right
+
+refresh the page when you die
+
 screencast link:
 
 extre credit:
