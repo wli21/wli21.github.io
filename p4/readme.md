@@ -7,7 +7,7 @@ d - right
 
 refresh the page when you die
 
-screencast link:
+screencast link: https://youtu.be/nROHpvtc8_k
 
 extre credit:
 
